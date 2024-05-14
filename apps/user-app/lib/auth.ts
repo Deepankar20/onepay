@@ -1,5 +1,4 @@
-import {PrismaClient} from "@repo/db/client";
-const db = new PrismaClient();
+import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
 
@@ -11,9 +10,9 @@ export const authOptions = {
             phone: { label: "Phone number", type: "text", placeholder: "1231231231" },
             password: { label: "Password", type: "password" }
           },
-          // TODO: User credentials type from next-aut
+
           async authorize(credentials: any) {
-            // Do zod validation, OTP validation here
+
             const hashedPassword = await bcrypt.hash(credentials.password, 10);
             const existingUser = await db.user.findFirst({
                 where: {
